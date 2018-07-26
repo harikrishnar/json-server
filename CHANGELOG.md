@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.15.0 - 2018-07-26
+
+* Added support to server array of ids sent instead of a single one
+
 ## 0.14.0 - 2018-06-09
 
 * Listen to `localhost` by default, instead of `0.0.0.0`
@@ -25,7 +29,7 @@
 
 Re-include `body-parser` in `jsonServer.defaults()`
 
-If you're using JSON Server in an Express server and experience issues, you can disable it by passing 
+If you're using JSON Server in an Express server and experience issues, you can disable it by passing
 
 ```js
 jsonServer.defaults({ bodyParser: false })
