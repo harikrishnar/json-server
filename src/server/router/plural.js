@@ -122,6 +122,7 @@ module.exports = (db, name, opts) => {
               const isDifferent = /_ne$/.test(key)
               const isRange = /_lte$/.test(key) || /_gte$/.test(key)
               const isLike = /_like$/.test(key)
+              const isValueArray = value[0] === "[" && value[value.length-1] === "]";
               const path = key.replace(/(_lte|_gte|_ne|_like)$/, '')
               // get item value based on path
               // i.e post.title -> 'foo'
@@ -142,6 +143,12 @@ module.exports = (db, name, opts) => {
                 return value !== elementValue.toString()
               } else if (isLike) {
                 return new RegExp(value, 'i').test(elementValue.toString())
+              } else if (isValueArray) {
+                var trimmedValue = value.substr(1).slice(0, -1);
+                trimmedValue = trimmedValue.slice(0, -1);
+                trimmedValue = trimmedValue.split("\"").join("")
+                var valArray = trimmedValue.split(",");
+                return valArray.indexOf(elementValue.toString()) > -1;
               } else {
                 return value === elementValue.toString()
               }
